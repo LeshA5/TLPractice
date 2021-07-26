@@ -13,6 +13,6 @@
 <div *ngIf="selectedLocation">
   <h2>{{selectedLocation.name | uppercase}} Details</h2>
   <button (click)="getForecast()"> Запросить погоду </button>
-  <div> Temperature: <span  style="color: {{getColor(forecasts.main.temp)}}">{{ forecasts.main.temp }}</span></div>
+  <div> Temperature: <span  style="color: {{ getColor(forecasts?.main?.temp) }}">{{ forecasts?.main?.temp }}</span></div>
 </div>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {location} from "./location";
-import { PredictWeatherService } from '../predict-weather.service';
+import {Location} from "./location";
+import { Forecast, PredictWeatherService } from '../predict-weather.service';
 
 
 @Component({
@@ -10,8 +10,7 @@ import { PredictWeatherService } from '../predict-weather.service';
 })
 
 export class ChoiseLocationComponent implements OnInit {
-
-  locations: location[] = [
+  locations: Location[] = [
     { id: '1', name: 'Kazan' },
     { id: '1', name: 'Cheboksary' },
     { id: '1', name: 'Medvedevo' },
@@ -21,13 +20,20 @@ export class ChoiseLocationComponent implements OnInit {
     { id: '2', name: 'Murmansk'}
   ];
 
-  searchStr = ''
+  searchStr = 'Kaz';
 
-  forecasts: any = {};
+  forecasts?: Forecast;
+
   constructor(private predictWeatherService : PredictWeatherService) {}
 
-  selectedLocation?: location;
-  onSelect(place: location): void {
+  selectedLocation?: Location;
+
+  fillForecasts(data: any)
+  {
+    this.forecasts = data;
+  }
+
+  onSelect(place: Location): void {
     this.selectedLocation = place;
   }
   getColor(tem: any){
@@ -36,10 +42,13 @@ export class ChoiseLocationComponent implements OnInit {
     else
       return 'blue'
   }
+
   getForecast(): void {
-    this.predictWeatherService.getForecast(this.selectedLocation?.name).subscribe(data => this.forecasts = data);
+    this.predictWeatherService.getForecast(this.selectedLocation?.name).subscribe(data => { this.fillForecasts(data); console.log(this.forecasts?.main?.feels_like);
+     });
   }
-  ngOnInit(): void {
+
+  ngOnInit(): void {    
   }
 
 
