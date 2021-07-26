@@ -1,0 +1,18 @@
+
+<div class="search-block">
+  <input type="text" [(ngModel)]="searchStr">
+</div>
+<ul class="places">
+  <li *ngFor="let place of locations | search: searchStr"
+      [class.selected]="place === selectedLocation"
+      (click)="onSelect(place)">
+    <span class="badge">{{place.id}}</span> {{place.name}}
+  </li>
+</ul>
+
+<div *ngIf="selectedLocation">
+  <h2>{{selectedLocation.name | uppercase}} Details</h2>
+  <button (click)="getForecast()"> Запросить погоду </button>
+  <div> Temperature: <span  style="color: {{getColor(forecasts.main.temp)}}">{{ forecasts.main.temp }}</span></div>
+</div>
+
