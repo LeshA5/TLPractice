@@ -10,19 +10,17 @@ import { PredictWeatherService } from '../predict-weather.service';
 })
 
 export class ChoiseLocationComponent implements OnInit {
-
   locations: location[] = [
-    { id: '1', name: 'Kazan' },
-    { id: '1', name: 'Cheboksary' },
-    { id: '1', name: 'Medvedevo' },
-    { id: '2', name: 'Yoshkar-Ola' },
-    { id: '2', name: 'Surok' },
-    { id: '2', name: 'Moscow' },
-    { id: '2', name: 'Murmansk'}
+    {  name: 'Kazan' },
+    {  name: 'Cheboksary' },
+    {  name: 'Medvedevo' },
+    {  name: 'Yoshkar-Ola' },
+    {  name: 'Surok' },
+    {  name: 'Moscow' },
+    {  name: 'Murmansk'}
   ];
-
   searchStr = ''
-
+  CityName = ''
   forecasts: any = {};
   constructor(private predictWeatherService : PredictWeatherService) {}
 
@@ -30,15 +28,26 @@ export class ChoiseLocationComponent implements OnInit {
   onSelect(place: location): void {
     this.selectedLocation = place;
   }
+
   getColor(tem: any){
     if (tem > 20)
       return 'red'
     else
       return 'blue'
   }
+  onKeydown(){
+    this.CityName = (document.getElementsByTagName('li')[0].innerHTML);
+    for (var i = 0; i < this.locations.length; i++){
+      if(this.locations[i].name == this.CityName){
+        this.selectedLocation = this.locations[i];
+        return
+      }
+    }
+  }
   getForecast(): void {
     this.predictWeatherService.getForecast(this.selectedLocation?.name).subscribe(data => this.forecasts = data);
   }
+
   ngOnInit(): void {
   }
 

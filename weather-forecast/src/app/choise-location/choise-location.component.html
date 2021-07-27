@@ -1,12 +1,12 @@
 
 <div class="search-block">
-  <input type="text" [(ngModel)]="searchStr">
+  <input type="text" [(ngModel)]="searchStr" (keyup.arrowDown)="onKeydown()">
 </div>
 <ul class="places">
   <li *ngFor="let place of locations | search: searchStr"
       [class.selected]="place === selectedLocation"
       (click)="onSelect(place)">
-    <span class="badge">{{place.id}}</span> {{place.name}}
+     {{place.name}}
   </li>
 </ul>
 
